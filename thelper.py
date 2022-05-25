@@ -35,7 +35,8 @@ def open_file():
 
     doc = Document(filepath)
     table = doc.tables[0]
-    for i in range(4, 8):
+    # len(table.rows)
+    for i in range(4, len(table.rows)):
         line = table.rows[i].cells[1].text
 
         # print(line)
