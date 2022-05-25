@@ -6,8 +6,14 @@ import json
 import tkinter as tk
 from tkinter import ttk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
+from docx.shared import Pt
 
+# style = document.styles['Normal']
+# font = style.font
+# font.name = 'Mallanna'
+# font.size = Pt(12)
 
+# paragraph.style = document.styles['Normal']
 
 def open_file():
     """Open a file for editing."""
@@ -29,8 +35,9 @@ def open_file():
 
     doc = Document(filepath)
     table = doc.tables[0]
-    for i in range(4, len(table.rows)):
+    for i in range(4, 8):
         line = table.rows[i].cells[1].text
+
         # print(line)
         payload = [{"Text": line}]
         headers = {
@@ -41,7 +48,11 @@ def open_file():
         response = requests.post(url, json=payload, headers=headers, params=querystring)
         
         r = response.json()
-        table.rows[i].cells[2].text = r[0]["translations"][0]["text"]
+    
+        table.rows[i].cells[2].text = ""
+        run = table.rows[i].cells[2].add_paragraph().add_run(r[0]["translations"][0]["text"])
+        run.font.name = 'Mallanna'
+        run.font.size = Pt(12)
         progress['value'] = i/len(table.rows) * progress['length']
         window.update_idletasks()
     doc.save(filepath)
