@@ -8,13 +8,6 @@ from tkinter import ttk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from docx.shared import Pt
 
-# style = document.styles['Normal']
-# font = style.font
-# font.name = 'Mallanna'
-# font.size = Pt(12)
-
-# paragraph.style = document.styles['Normal']
-
 def open_file():
     """Open a file for editing."""
 
@@ -50,8 +43,9 @@ def open_file():
         
         r = response.json()
     
-        table.rows[i].cells[2].text = ""
-        run = table.rows[i].cells[2].add_paragraph().add_run(r[0]["translations"][0]["text"])
+        table.rows[i].cells[2].text = r[0]["translations"][0]["text"]
+        # run = table.rows[i].cells[2].add_paragraph().add_run(r[0]["translations"][0]["text"])
+        run = table.rows[i].cells[2].paragraphs[0].runs[0]
         run.font.name = 'Mallanna'
         run.font.size = Pt(12)
         progress['value'] = i/len(table.rows) * progress['length']
