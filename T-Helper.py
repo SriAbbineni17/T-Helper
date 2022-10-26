@@ -30,14 +30,16 @@ def open_file():
     doc = Document(filepath)
     table = doc.tables[0]
     # len(table.rows)
+    
     for i in range(4, len(table.rows)):
         line = table.rows[i].cells[1].text
+#sri key: 926576883emsh0929c234d91e5d8p19a217jsn1b07e87e770d
 
         # print(line)
         payload = [{"Text": line}]
         headers = {
                     'content-type': "application/json",
-                        'x-rapidapi-key': "926576883emsh0929c234d91e5d8p19a217jsn1b07e87e770d",
+                        'x-rapidapi-key': "6fbae1f9d6mshb826f520c2f1e36p1b376cjsnf532747f5544",
                             'x-rapidapi-host': "microsoft-translator-text.p.rapidapi.com"
                                 }
         response = requests.post(url, json=payload, headers=headers, params=querystring)
