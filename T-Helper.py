@@ -23,7 +23,7 @@ def open_file():
     progress = tk.ttk.Progressbar(fr_queue, orient = 'horizontal', length = 100, mode = 'determinate')
     progress.pack(side='top', fill = 'both') 
     # print(filename)
-    url = "https://microsoft-translator-text.p.rapidapi.com/translate"
+    url = "https://deep-translate1.p.rapidapi.com/language/translate/v2"
 
     querystring = {"to[0]":"te","api-version":"3.0","profanityAction":"NoAction","textType":"plain"}
 
@@ -36,17 +36,23 @@ def open_file():
 #sri key: 926576883emsh0929c234d91e5d8p19a217jsn1b07e87e770d
 
         # print(line)
-        payload = [{"Text": line}]
+        payload = {
+            "q": line,
+            "source": "en",
+	        "target": "te"        
+        }
         headers = {
-                    'content-type': "application/json",
-                        'x-rapidapi-key': "6fbae1f9d6mshb826f520c2f1e36p1b376cjsnf532747f5544",
-                            'x-rapidapi-host': "microsoft-translator-text.p.rapidapi.com"
-                                }
-        response = requests.post(url, json=payload, headers=headers, params=querystring)
+            "content-type": "application/json",
+            "X-RapidAPI-Key": "6fbae1f9d6mshb826f520c2f1e36p1b376cjsnf532747f5544",
+            "X-RapidAPI-Host": "deep-translate1.p.rapidapi.com"
+        }
+        response = requests.post(url, json=payload, headers=headers)
+        # print(i)
         
         r = response.json()
-    
-        table.rows[i].cells[2].text = r[0]["translations"][0]["text"]
+        # print(r)
+        table.rows[i].cells[2].text = r['data']['translations']['translatedText']
+        # print(r['data']['translations']['translatedText'])
         # run = table.rows[i].cells[2].add_paragraph().add_run(r[0]["translations"][0]["text"])
         run = table.rows[i].cells[2].paragraphs[0].runs[0]
         run.font.name = 'Mallanna'
